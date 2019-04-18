@@ -2,9 +2,14 @@
   "name": "electron-vue-cli",
   "version": "0.1.0",
   "private": true,
+  "main": "src/main/main.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "dev:render": "vue-cli-service serve",
+    "dev:main": "cross-env NODE_ENV=development nodemon --watch src/main/main.js --exec electron .",
+    "dev": "concurrently \"yarn run dev:render\" \"wait-on http://localhost:8080 && yarn run dev:main\"",
+    "build:render": "vue-cli-service build",
+    "build:main": "electron-builder -w",
+    "build": "yarn run build:render && yarn run build:main",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -23,11 +28,17 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
+    "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
+    "electron": "^4.1.4",
+    "electron-builder": "^20.39.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "nodemon": "^1.18.11",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "wait-on": "^3.2.0"
   },
   "eslintConfig": {
     "root": true,
@@ -46,6 +57,19 @@
   "postcss": {
     "plugins": {
       "autoprefixer": {}
+    }
+  },
+  "build": {
+    "appId": "com.demo.app",
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis"
+        }
+      ]
     }
   },
   "browserslist": [
