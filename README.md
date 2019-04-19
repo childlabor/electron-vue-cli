@@ -14,8 +14,8 @@
 |   \---js
 +---public
 +---src
-|   +---main // 主进程
-|   \---renderer // 渲染进程
+|   +---main // 主进程业务
+|   \---renderer // 渲染进程业务
 |       +---assets
 |       +---components
 |       \---views
@@ -57,4 +57,5 @@ $ yarn run build
     - 系统事项
 - 渲染进程
     - 进程间通信
+    - 其他业务
 
